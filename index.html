@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="p-6 bg-white shadow">
-    <nav class="max-w-5xl mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Abdulmalik Apata</h1>
-      <div class="space-x-6">
-        <a href="/projects/" class="hover:text-blue-600">Projects</a>
-        <a href="./blog/blogs.html" class="hover:text-blue-600">Blog</a>
-        <a href="/bookshelf/" class="hover:text-blue-600">Bookshelf</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belmont Browne</title>
+
+    <!-- Tailwind -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <!-- Inter font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+
+  <body class="bg-[#FAF9F5] text-[#141413] w-full max-w-[90%] md:w-[43%] mx-auto antialiased">
+    <!-- NAV -->
+    <nav class="mt-10 flex items-center justify-between">
+      <a href="./index.html" class="text-3xl md:text-4xl font-semibold tracking-tight hover:text-[#DA7756] transition-colors">
+        Belmont's Blog
+      </a>
+
+      <div class="flex gap-8 text-sm text-[#141413]/70">
+        <a href="./blog/blogs.html" class="nav-link">Blogs</a>
+        <a href="./papers/paper.html" class="nav-link">Papers</a>
+        <a href="./projects/project.html" class="nav-link">Projects</a>
       </div>
     </nav>
-  </header>
 
-  <section class="max-w-5xl mx-auto mt-16 text-center">
-    <h2 class="text-4xl font-bold mb-4">Hi, I'm Abdulmalik</h2>
-    <p class="text-lg text-gray-600 mb-8">
-      I build things on the web. Here you'll find my projects, my writing, and the books that influence me.
-    </p>
-    <a href="/projects/" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">See My Work</a>
-  </section>
+    <hr class="mt-8 border-[#E8E6DC]" />
 
-  <footer class="mt-24 p-6 text-center text-gray-500">
-    © 2025 Abdulmalik Apata
-  </footer>
-</body>
+    <!-- CONTENT -->
+    <section class="mt-12 space-y-6 text-base leading-7 max-w-prose">
+      <p>
+        Hi, I'm
+        <span class="font-medium text-[#DA7756]">Belmont Browne</span>
+      </p>
+
+      <p>
+        I'm a developer who enjoys exploring distributed systems, backend 
+        architecture, and the elegant solutions hidden in research papers.
+      </p>
+
+      <p>
+        On this site, you'll find my thoughts on technical topics I'm learning 
+        about, papers that caught my attention, and projects I'm tinkering with.
+      </p>
+
+      <p>
+        I'm always learning something new. Right now, that might be consensus 
+        algorithms, performance optimization, or whatever rabbit hole I've 
+        fallen into this week.
+      </p>
+
+      <p>
+        Feel free to explore my writing and reach out if something resonates with you.
+      </p>
+
+      <hr class="my-8 border-[#E8E6DC]" />
+
+      <!-- SOCIALS -->
+      <div class="flex flex-wrap gap-6 text-sm">
+        <a href="https://twitter.com/yourusername" class="social-link">Twitter</a>
+        <a href="https://github.com/yourusername" class="social-link">GitHub</a>
+        <a href="https://linkedin.com/in/yourusername" class="social-link">LinkedIn</a>
+        <a href="mailto:your.email@example.com" class="social-link">Email</a>
+      </div>
+    </section>
+  </body>
 </html>

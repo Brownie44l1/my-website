@@ -1,64 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Blog</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="p-6 bg-white shadow">
-    <nav class="max-w-5xl mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Abdulmalik Apata</h1>
-      <div class="space-x-6">
-        <a href="/" class="hover:text-blue-600">Home</a>
-        <a href="/projects/" class="hover:text-blue-600">Projects</a>
-        <a href="/bookshelf/" class="hover:text-blue-600">Bookshelf</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogs · Belmont Browne</title>
+
+    <!-- Tailwind -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <!-- Inter font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+
+  <body class="bg-[#FAF9F5] text-[#141413] w-full max-w-[90%] md:w-[43%] mx-auto antialiased">
+    <!-- NAV -->
+    <nav class="mt-10 flex items-center justify-between">
+      <!-- Title -->
+      <a href="../index.html" class="text-3xl md:text-4xl font-semibold tracking-tight hover:text-[#DA7756] transition-colors">
+        Belmont's Blog
+      </a>
+
+      <!-- Links -->
+      <div class="flex gap-8 text-sm text-[#141413]/70">
+        <a href="./blogs.html" class="nav-link">Blogs</a>
+        <a href="../papers/paper.html" class="nav-link">Papers</a>
+        <a href="../projects/project.html" class="nav-link">Projects</a>
       </div>
     </nav>
-  </header>
 
-  <section class="max-w-3xl mx-auto mt-16">
-    <h2 class="text-4xl font-bold mb-8">Blog</h2>
+    <hr class="mt-8 border-[#E8E6DC]" />
 
-    <article class="mb-8">
-      <h3 class="text-2xl font-semibold">
-        <a href="/blog/first-post.html" class="hover:text-blue-600">First Post Title</a>
-      </h3>
-      <p class="text-gray-600">Short description of the first post.</p>
-    </article>
+    <!-- HEADER -->
+    <section class="mt-10">
+      <p class="mt-2 text-sm text-[#141413]/70 max-w-prose">
+        Notes on backend systems, distributed systems, mathematics, and things I
+        learn while building.
+      </p>
+    </section>
 
-    <article class="mb-8">
-      <h3 class="text-2xl font-semibold">
-        <a href="/blog/second-post.html" class="hover:text-blue-600">Second Post Title</a>
-      </h3>
-      <p class="text-gray-600">Short description of the second post.</p>
-    </article>
+    <!-- BLOG LIST -->
+    <ul class="mt-10 divide-y divide-[#E8E6DC]">
+      <!-- Item -->
+      <li>
+        <a href="./redis.html" class="flex items-center gap-6 py-4 group">
+          <span class="text-sm text-[#141413]/60 w-40 shrink-0">
+            Oct 2, 2025
+          </span>
 
-    <article class="mb-8">
-      <h3 class="text-2xl font-semibold">
-        <a href="/blog/second-post.html" class="hover:text-blue-600">Third Post Title</a>
-      </h3>
-      <p class="text-gray-600">Short description of the third post.</p>
-    </article>
+          <span class="text-base font-medium group-hover:text-[#DA7756] transition">
+            Redis 101: From a Beginner's POV
+          </span>
+        </a>
+      </li>
 
-    <article class="mb-8">
-      <h3 class="text-2xl font-semibold">
-        <a href="/blog/second-post.html" class="hover:text-blue-600">Fourth Post Title</a>
-      </h3>
-      <p class="text-gray-600">Short description of the fourth post.</p>
-    </article>
+      <li>
+        <a href="#" class="flex items-center gap-6 py-4 group opacity-60 cursor-not-allowed">
+          <span class="text-sm w-40 shrink-0">—</span>
+          <span class="text-base font-medium">
+            Recursion 101 🔒
+          </span>
+        </a>
+      </li>
 
-    <article class="mb-8">
-      <h3 class="text-2xl font-semibold">
-        <a href="/blog/second-post.html" class="hover:text-blue-600">Fifth Post Title</a>
-      </h3>
-      <p class="text-gray-600">Short description of the fifth post.</p>
-    </article>
-  </section>
+      <li>
+        <a href="./distributed-systems.html" class="flex items-center gap-6 py-4 group">
+          <span class="text-sm text-[#141413]/60 w-40 shrink-0">
+            Aug 8, 2025
+          </span>
 
-  <footer class="mt-24 p-6 text-center text-gray-500">
-    © 2025 Abdulmalik Apata
-  </footer>
-</body>
+          <span class="text-base font-medium group-hover:text-[#DA7756] transition">
+            Distributed Systems 101: From a Beginner's POV
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a href="./sockets.html" class="flex items-center gap-6 py-4 group">
+          <span class="text-sm text-[#141413]/60 w-40 shrink-0">
+            Jul 26, 2025
+          </span>
+
+          <span class="text-base font-medium group-hover:text-[#DA7756] transition">
+            Sockets 101: From a Beginner's POV
+          </span>
+        </a>
+      </li>
+    </ul>
+  </body>
 </html>

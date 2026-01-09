@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTTP/2 from Scratch · Belmont Browne</title>
+
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+
+  <body class="bg-[#FAF9F5] text-[#141413] max-w-[90%] md:w-[60%] mx-auto antialiased">
+    <!-- NAV -->
+    <nav class="mt-10 flex items-center justify-between">
+      <a href="./project.html" class="text-sm text-[#141413]/70 hover:text-[#DA7756] transition">
+        ← Back to projects
+      </a>
+      
+      <a href="../index.html" class="text-sm text-[#141413]/70 hover:text-[#DA7756] transition">
+        Home
+      </a>
+    </nav>
+
+    <!-- PROJECT -->
+    <article class="mt-14 mx-auto max-w-[65ch]">
+      <header>
+        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">
+          HTTP/2 from Scratch
+        </h1>
+
+        <p class="mt-4 text-base text-[#141413]/70 leading-7">
+          A complete HTTP/2 implementation built in Go to understand the protocol
+          at a fundamental level—from raw TCP sockets to multiplexed streams.
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-3">
+          <span class="px-3 py-1 bg-[#E8E6DC] text-xs font-medium rounded-full">Go</span>
+          <span class="px-3 py-1 bg-[#E8E6DC] text-xs font-medium rounded-full">Networking</span>
+          <span class="px-3 py-1 bg-[#E8E6DC] text-xs font-medium rounded-full">Protocols</span>
+        </div>
+
+        <div class="mt-8 flex gap-6 text-sm">
+          <a href="https://github.com/yourusername/http2-go" class="hover:text-[#DA7756] transition">
+            GitHub →
+          </a>
+          <a href="#" class="hover:text-[#DA7756] transition">
+            Live Demo →
+          </a>
+          <a href="#" class="hover:text-[#DA7756] transition">
+            Technical Writeup →
+          </a>
+        </div>
+      </header>
+
+      <hr class="my-8 border-[#E8E6DC]" />
+
+      <section class="mt-10 space-y-6 text-base leading-7">
+        <h2 class="text-2xl font-semibold">Overview</h2>
+        <p>
+          This project implements HTTP/2 from the ground up, starting with raw
+          TCP sockets and building up through framing, streams, flow control,
+          and header compression (HPACK). The goal was to deeply understand how
+          modern web protocols work under the hood.
+        </p>
+
+        <h2 class="text-2xl font-semibold mt-10">Motivation</h2>
+        <p>
+          HTTP/1.1 was showing its age—head-of-line blocking, inefficient use
+          of connections, and bloated headers were all pain points. HTTP/2
+          addresses these with multiplexing, binary framing, and header compression.
+        </p>
+
+        <p>
+          Rather than just using an existing library, I wanted to understand
+          exactly how these improvements work. Building it from scratch forced
+          me to grapple with the spec and make design decisions myself.
+        </p>
+
+        <h2 class="text-2xl font-semibold mt-10">Architecture</h2>
+        
+        <h3 class="text-xl font-medium mt-6">Transport Layer</h3>
+        <p>
+          Handles the TLS handshake and connection preface. HTTP/2 requires
+          ALPN negotiation to signal protocol support during the TLS handshake.
+        </p>
+
+        <h3 class="text-xl font-medium mt-6">Framing Layer</h3>
+        <p>
+          HTTP/2 uses a binary framing layer. All communication is split into
+          frames (DATA, HEADERS, SETTINGS, etc.) that can be interleaved on
+          the wire. This is what enables multiplexing.
+        </p>
+
+        <pre class="bg-[#141413] text-[#FAF9F5] p-4 rounded-lg text-sm overflow-x-auto font-mono mt-4"><code>type Frame struct {
+    Length   uint24
+    Type     uint8
+    Flags    uint8
+    StreamID uint31
+    Payload  []byte
+}</code></pre>
+
+        <h3 class="text-xl font-medium mt-6">Stream Management</h3>
+        <p>
+          Each request/response pair gets its own stream ID. Multiple streams
+          can be active simultaneously over a single TCP connection. The
+          implementation needs to handle stream priority, dependencies, and
+          flow control windows.
+        </p>
+
+        <h3 class="text-xl font-medium mt-6">HPACK Compression</h3>
+        <p>
+          HTTP headers are compressed using HPACK, which maintains a dynamic
+          table of previously seen headers. This dramatically reduces overhead
+          for repeated headers like cookies and user agents.
+        </p>
+
+        <h2 class="text-2xl font-semibold mt-10">Challenges</h2>
+        <p>
+          The hardest part was getting flow control right. Both connection-level
+          and stream-level flow control need to be managed carefully to avoid
+          deadlocks while maximizing throughput.
+        </p>
+
+        <p>
+          HPACK was also tricky—the dynamic table needs to be kept in sync
+          between client and server, and the eviction algorithm is subtle.
+        </p>
+
+        <h2 class="text-2xl font-semibold mt-10">Results</h2>
+        <p>
+          The implementation successfully handles concurrent streams, properly
+          implements flow control, and passes most of the h2spec test suite.
+          Performance isn't production-ready, but that wasn't the goal—deep
+          understanding was.
+        </p>
+
+        <p>
+          Building this gave me a much better intuition for protocol design
+          and the tradeoffs involved in performance-critical systems.
+        </p>
+      </section>
+    </article>
+
+    <footer class="mt-16 mb-10 pt-8 border-t border-[#E8E6DC]">
+      <a href="./project.html" class="text-sm text-[#141413]/70 hover:text-[#DA7756] transition">
+        ← Back to all projects
+      </a>
+    </footer>
+  </body>
+</html>
