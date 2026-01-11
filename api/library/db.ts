@@ -1,70 +1,36 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { Redis } from "@upstash/redis";
 
-const DATA_DIR = join(process.cwd(), 'data');
-const METRICS_FILE = join(DATA_DIR, 'metrics.json');
-
-// Ensure data directory exists
-if (!existsSync(DATA_DIR)) {
-  mkdirSync(DATA_DIR, { recursive: true });
-}
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 interface Metrics {
-  [slug: string]: {
-    reads: number;
-    kudos: number;
-  };
+  reads: number;
+  kudos: number;
 }
 
-function readMetrics(): Metrics {
-  if (!existsSync(METRICS_FILE)) {
-    return {};
-  }
-  
-  try {
-    const data = readFileSync(METRICS_FILE, 'utf-8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error reading metrics:', error);
-    return {};
-  }
+export async function getMetrics(slug: string): Promise<Metrics> {
+  const metrics = await redis.get<Metrics>(`metrics:${slug}`);
+  return metrics || { reads: 0, kudos: 0 };
 }
 
-function writeMetrics(metrics: Metrics): void {
-  try {
-    writeFileSync(METRICS_FILE, JSON.stringify(metrics, null, 2), 'utf-8');
-  } catch (error) {
-    console.error('Error writing metrics:', error);
-  }
+export async function incrementReads(slug: string): Promise<Metrics> {
+  const key = `metrics:${slug}`;
+  const metrics = (await redis.get<Metrics>(key)) || { reads: 0, kudos: 0 };
+
+  metrics.reads += 1;
+  await redis.set(key, metrics);
+
+  return metrics;
 }
 
-export function getMetrics(slug: string) {
-  const metrics = readMetrics();
-  return metrics[slug] || { reads: 0, kudos: 0 };
-}
+export async function incrementKudos(slug: string): Promise<Metrics> {
+  const key = `metrics:${slug}`;
+  const metrics = (await redis.get<Metrics>(key)) || { reads: 0, kudos: 0 };
 
-export function incrementReads(slug: string) {
-  const metrics = readMetrics();
-  
-  if (!metrics[slug]) {
-    metrics[slug] = { reads: 0, kudos: 0 };
-  }
-  
-  metrics[slug].reads += 1;
-  writeMetrics(metrics);
-  
-  return metrics[slug];
-}
+  metrics.kudos += 1;
+  await redis.set(key, metrics);
 
-export function incrementKudos(slug: string) {
-  const metrics = readMetrics();
-  
-  if (!metrics[slug]) {
-    metrics[slug] = { reads: 0, kudos: 0 };
-  }
-  
-  metrics[slug].kudos += 1;
-  writeMetrics(metrics);
-  
-  return metrics[slug];
+  return metrics;
 }
