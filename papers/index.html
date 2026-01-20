@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog · Abdulmalik Apata</title>
-    <meta name="description" content="Notes on backend systems, distributed systems, and things I learn while building.">
+    <title>Papers · Abdulmalik Apata</title>
+    <meta name="description" content="Research papers I've read, with notes and commentary.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"/>
     
     <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body class="bg-white dark:bg-black transition-colors duration-300 font-satoshi">
     
@@ -45,8 +45,8 @@
                 </a>
                 
                 <div class="flex items-center gap-3 sm:gap-4 md:gap-6">
-                    <a href="/blog" class="text-xs sm:text-sm font-medium text-black dark:text-white">Blog</a>
-                    <a href="/papers" class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors">Papers</a>
+                    <a href="/blog" class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors">Blog</a>
+                    <a href="/papers" class="text-xs sm:text-sm font-medium text-black dark:text-white">Papers</a>
                     <a href="/projects" class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors">Projects</a>
                     
                     <!-- Dark mode toggle -->
@@ -73,14 +73,17 @@
 
             <!-- Header -->
             <section class="mt-6 sm:mt-8 md:mt-10 animate-fade-in-up">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-black dark:text-white mb-3 sm:mb-4">
+                    Papers
+                </h1>
                 <p class="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                    Notes on backend systems, distributed systems, mathematics, and things I learn while building.
+                    Research papers I've read, along with simplified explanations, notes, and personal commentary.
                 </p>
             </section>
 
-            <!-- Blog List -->
-            <ul id="blog-list" class="mt-8 sm:mt-10 divide-y divide-zinc-200 dark:divide-zinc-800">
-                <!-- Blog posts will be injected here -->
+            <!-- Papers List -->
+            <ul id="papers-list" class="mt-8 sm:mt-10 divide-y divide-zinc-200 dark:divide-zinc-800">
+                <!-- Papers will be injected here -->
             </ul>
 
             <!-- Footer -->
@@ -93,8 +96,8 @@
     </main>
 
     <!-- Scripts -->
-    <script src="assets/js/utils/theme.js"></script>
-    <script src="assets/js/config/data.js"></script>
+    <script src="../assets/js/utils/theme.js"></script>
+    <script src="../assets/js/config/data.js"></script>
     <script>
         // Theme toggle
         const toggle = document.getElementById('theme-toggle');
@@ -125,76 +128,44 @@
             }
         });
 
-        // Render blog posts
-        function renderBlogPosts() {
-            const blogList = document.getElementById('blog-list');
-            const posts = sortPostsByDate(blogConfig.blogPosts);
-
-            const postsHTML = posts.map((post, index) => {
-                const isLocked = !post.published;
+        // Render papers
+        function renderPapers() {
+            const papersList = document.getElementById('papers-list');
+            
+            const papersHTML = blogConfig.papers.map((paper, index) => {
                 const delay = `style="animation-delay: ${(index + 1) * 0.1}s;"`;
                 
-                if (isLocked) {
-                    return `
-                        <li class="animate-fade-in-up" ${delay}>
-                            <div class="py-4 sm:py-5 opacity-50 cursor-not-allowed">
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex items-center justify-between gap-3">
-                                        <span class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-                                            ${formatDate(post.date)}
-                                        </span>
-                                        <span class="text-xs text-zinc-500">🔒</span>
-                                    </div>
-                                    <span class="text-sm sm:text-base font-medium text-zinc-900 dark:text-zinc-100">
-                                        ${post.title}
-                                    </span>
-                                </div>
-                            </div>
-                        </li>
-                    `;
-                }
-
                 return `
-                    <li class="animate-fade-in-up" ${delay}>
-                        <a href="/posts/${post.slug}.html" class="block py-4 sm:py-5 group">
-                            <div class="flex flex-col gap-2 sm:gap-2.5">
-                                <div class="flex items-center justify-between gap-3">
-                                    <span class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
-                                        ${formatDate(post.date)}
-                                    </span>
-                                    ${post.readTime ? `
-                                        <span class="text-xs text-zinc-500 dark:text-zinc-500">
-                                            ${post.readTime}
-                                        </span>
-                                    ` : ''}
+                    <li class="py-5 sm:py-6 animate-fade-in-up" ${delay}>
+                        <a href="/papers/${paper.slug}.html" class="group block">
+                            <h3 class="text-base sm:text-lg font-medium text-black dark:text-white group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors leading-snug">
+                                ${paper.title}
+                            </h3>
+
+                            <p class="mt-2 text-xs sm:text-sm text-zinc-600 dark:text-zinc-400">
+                                ${paper.authors} · ${paper.year} · ${paper.venue}
+                            </p>
+
+                            <p class="mt-2 sm:mt-3 text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                                ${paper.excerpt}
+                            </p>
+
+                            ${paper.tags && paper.tags.length > 0 ? `
+                                <div class="mt-2 sm:mt-3 flex flex-wrap gap-1.5">
+                                    ${paper.tags.map(tag => `
+                                        <span class="tag-pill px-2 py-1 text-xs rounded-full">${tag}</span>
+                                    `).join('')}
                                 </div>
-                                <span class="text-sm sm:text-base font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors">
-                                    ${post.title}
-                                </span>
-                                ${post.excerpt ? `
-                                    <p class="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
-                                        ${post.excerpt}
-                                    </p>
-                                ` : ''}
-                                ${post.tags && post.tags.length > 0 ? `
-                                    <div class="flex flex-wrap gap-1.5 mt-1">
-                                        ${post.tags.slice(0, 3).map(tag => `
-                                            <span class="px-2 py-0.5 text-xs bg-zinc-100 dark:bg-zinc-900 rounded-full text-zinc-700 dark:text-zinc-300">
-                                                ${tag}
-                                            </span>
-                                        `).join('')}
-                                    </div>
-                                ` : ''}
-                            </div>
+                            ` : ''}
                         </a>
                     </li>
                 `;
             }).join('');
 
-            blogList.innerHTML = postsHTML;
+            papersList.innerHTML = papersHTML;
         }
 
-        renderBlogPosts();
+        renderPapers();
     </script>
 </body>
 </html>

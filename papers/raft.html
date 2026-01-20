@@ -1,130 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>In Search of an Understandable Consensus Algorithm · Belmont Browne</title>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Search of an Understandable Consensus Algorithm · Abdulmalik Apata</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          darkMode: 'class',
+          theme: {
+            extend: {
+              fontFamily: {
+                satoshi: ['Satoshi', 'system-ui', 'sans-serif'],
+              },
+            },
+          },
+        }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"/>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="bg-white dark:bg-black transition-colors duration-300 font-satoshi">
+    
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress"></div>
+    
+    <!-- Vertical Lines -->
+    <div class="fixed mx-auto max-w-[53rem] left-0 right-0 h-full pointer-events-none z-0">
+        <div class="absolute left-0 top-0 h-full w-[1px] bg-black/10 dark:bg-white/10"></div>
+        <div class="absolute right-0 top-0 h-full w-[1px] bg-black/10 dark:bg-white/10"></div>
+    </div>
 
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <main class="flex flex-col relative items-center mx-auto">
+        <div class="w-full max-w-[53rem] px-6 md:px-16">
+            
+            <!-- Navigation -->
+            <div id="main-nav"></div>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
+            <!-- Article -->
+            <article class="mt-12 max-w-[65ch] mx-auto">
+                <header class="animate-fade-in-up">
+                    <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-black dark:text-white">
+                        In Search of an Understandable Consensus Algorithm
+                    </h1>
 
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="../assets/css/styles.css" />
-  </head>
+                    <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+                        Diego Ongaro, John Ousterhout · 2014 · USENIX ATC
+                    </p>
 
-  <body class="bg-[#FAF9F5] text-[#141413] max-w-[90%] md:w-[60%] mx-auto antialiased">
-    <!-- NAV -->
-    <nav class="mt-10 flex items-center justify-between">
-      <a href="./paper.html" class="text-sm text-[#141413]/70 hover:text-[#DA7756] transition">
-        ← Back to papers
-      </a>
-      
-      <a href="../index.html" class="text-sm text-[#141413]/70 hover:text-[#DA7756] transition">
-        Home
-      </a>
-    </nav>
+                    <div class="mt-6 flex flex-wrap gap-4 text-sm">
+                        <a href="https://raft.github.io/raft.pdf" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="flex items-center gap-1 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors">
+                            Read PDF →
+                        </a>
+                        <a href="https://raft.github.io/" 
+                           target="_blank" 
+                           rel="noopener noreferrer"
+                           class="flex items-center gap-1 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white transition-colors">
+                            Raft Website →
+                        </a>
+                    </div>
+                </header>
 
-    <!-- PAPER -->
-    <article class="mt-14 mx-auto max-w-[65ch]">
-      <header>
-        <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">
-          In Search of an Understandable Consensus Algorithm
-        </h1>
+                <hr class="my-8 border-zinc-200 dark:border-zinc-800" />
 
-        <p class="mt-3 text-sm text-[#141413]/60">
-          Diego Ongaro, John Ousterhout · 2014 · USENIX ATC
-        </p>
+                <!-- Paper Content -->
+                <div class="mt-8 space-y-6 text-base leading-7 text-zinc-900 dark:text-zinc-100 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    
+                    <h2 class="text-2xl font-bold mt-10 mb-4 text-black dark:text-white">
+                        Summary
+                    </h2>
+                    <p>
+                        Raft is a consensus algorithm designed to be more understandable than
+                        Paxos while providing equivalent fault tolerance and performance. The
+                        authors explicitly optimized for understandability, making it easier
+                        to teach and implement in real systems.
+                    </p>
 
-        <div class="mt-6 flex gap-6 text-sm">
-          <a
-            href="https://raft.github.io/raft.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-[#DA7756] transition"
-          >
-            Read PDF →
-          </a>
-          <a
-            href="https://raft.github.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hover:text-[#DA7756] transition"
-          >
-            Raft Website →
-          </a>
+                    <h2 class="text-2xl font-bold mt-10 mb-4 text-black dark:text-white">
+                        Key Ideas
+                    </h2>
+                    
+                    <h3 class="text-xl font-semibold mt-6 mb-3 text-black dark:text-white">
+                        Leader Election
+                    </h3>
+                    <p>
+                        Raft uses a strong leader model. Only one server acts as the leader at
+                        a time, and all client requests go through it. If the leader fails,
+                        followers can start an election to choose a new leader.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mt-6 mb-3 text-black dark:text-white">
+                        Log Replication
+                    </h3>
+                    <p>
+                        The leader receives commands from clients, appends them to its log,
+                        and replicates them to follower servers. Once a majority of servers
+                        have stored the entry, it's considered committed.
+                    </p>
+
+                    <h3 class="text-xl font-semibold mt-6 mb-3 text-black dark:text-white">
+                        Safety
+                    </h3>
+                    <p>
+                        Raft guarantees that committed entries will never be lost and that
+                        servers will apply the same sequence of commands to their state machines.
+                    </p>
+
+                    <h2 class="text-2xl font-bold mt-10 mb-4 text-black dark:text-white">
+                        Why It Matters
+                    </h2>
+                    <p>
+                        What makes Raft compelling isn't performance—it's clarity. The algorithm
+                        is decomposed into relatively independent subproblems: leader election,
+                        log replication, and safety. This makes it much easier to understand
+                        and implement correctly than Paxos.
+                    </p>
+
+                    <p>
+                        Many production systems now use Raft, including etcd (used by Kubernetes),
+                        Consul, and CockroachDB. Its understandability has made it the go-to
+                        choice for distributed consensus.
+                    </p>
+
+                    <h2 class="text-2xl font-bold mt-10 mb-4 text-black dark:text-white">
+                        My Notes
+                    </h2>
+                    <p>
+                        Reading this paper made distributed consensus click for me. The
+                        visualization on the Raft website is particularly helpful for
+                        understanding the election and replication process.
+                    </p>
+
+                    <p>
+                        One interesting design choice: term numbers act as a logical clock,
+                        helping servers detect stale information. It's a simple but elegant
+                        solution to a complex problem.
+                    </p>
+
+                </div>
+            </article>
+
+            <!-- Footer Navigation -->
+            <footer class="mt-16 mb-10 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+                <a href="/papers" class="text-sm text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors">
+                    ← Back to all papers
+                </a>
+            </footer>
         </div>
-      </header>
+    </main>
 
-      <hr class="my-8 border-[#E8E6DC]" />
+    <!-- Scripts -->
+    <script src="../assets/js/utils/theme.js"></script>
+    <script src="../assets/js/config/data.js"></script>
+    <script src="../assets/js/components/navigation.js"></script>
+    <script>
+        // Initialize navigation
+        const nav = new BlogNavigation(blogConfig);
+        nav.init('main-nav', 'papers', true, '/papers', 'Back to papers');
 
-      <section class="mt-10 space-y-6 text-base leading-7">
-        <h2 class="text-2xl font-semibold">Summary</h2>
-        <p>
-          Raft is a consensus algorithm designed to be more understandable than
-          Paxos while providing equivalent fault tolerance and performance. The
-          authors explicitly optimized for understandability, making it easier
-          to teach and implement in real systems.
-        </p>
-
-        <h2 class="text-2xl font-semibold mt-10">Key Ideas</h2>
-        
-        <h3 class="text-xl font-medium mt-6">Leader Election</h3>
-        <p>
-          Raft uses a strong leader model. Only one server acts as the leader at
-          a time, and all client requests go through it. If the leader fails,
-          followers can start an election to choose a new leader.
-        </p>
-
-        <h3 class="text-xl font-medium mt-6">Log Replication</h3>
-        <p>
-          The leader receives commands from clients, appends them to its log,
-          and replicates them to follower servers. Once a majority of servers
-          have stored the entry, it's considered committed.
-        </p>
-
-        <h3 class="text-xl font-medium mt-6">Safety</h3>
-        <p>
-          Raft guarantees that committed entries will never be lost and that
-          servers will apply the same sequence of commands to their state machines.
-        </p>
-
-        <h2 class="text-2xl font-semibold mt-10">Why It Matters</h2>
-        <p>
-          What makes Raft compelling isn't performance—it's clarity. The algorithm
-          is decomposed into relatively independent subproblems: leader election,
-          log replication, and safety. This makes it much easier to understand
-          and implement correctly than Paxos.
-        </p>
-
-        <p>
-          Many production systems now use Raft, including etcd (used by Kubernetes),
-          Consul, and CockroachDB. Its understandability has made it the go-to
-          choice for distributed consensus.
-        </p>
-
-        <h2 class="text-2xl font-semibold mt-10">My Notes</h2>
-        <p>
-          Reading this paper made distributed consensus click for me. The
-          visualization on the Raft website is particularly helpful for
-          understanding the election and replication process.
-        </p>
-
-        <p>
-          One interesting design choice: term numbers act as a logical clock,
-          helping servers detect stale information. It's a simple but elegant
-          solution to a complex problem.
-        </p>
-      </section>
-    </article>
-
-    <footer class="mt-16 mb-10 pt-8 border-t border-[#E8E6DC]">
-      <a href="./paper.html" class="text-sm text-[#141413]/70 hover:text-[#DA7756] transition">
-        ← Back to all papers
-      </a>
-    </footer>
-  </body>
+        // Reading progress bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.reading-progress').style.width = scrolled + '%';
+        });
+    </script>
+</body>
 </html>
